@@ -1,4 +1,5 @@
 gcc -pthread main.c -o main
+
 ./main t n arqA.dat arqB.dat arqC.dat arqD.dat arqE.dat
 
 t = numero de threads
