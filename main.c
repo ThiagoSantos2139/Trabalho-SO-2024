@@ -141,12 +141,17 @@ void *thread_write_E(void *arg) {
 
 int main(int argc, char *argv[]) {
     if (argc != 8) {
-        fprintf(stderr, "Numero maximo de arquivos excedido, use: %s T n arqA.dat arqB.dat arqC.dat arqD.dat arqE.dat\n", argv[0]);
+        fprintf(stderr, "Erro de comando, utilize: %s T n arqA.dat arqB.dat arqC.dat arqD.dat arqE.dat\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
     int T = atoi(argv[1]);
     int n = atoi(argv[2]);
+    const char *arqA = argv[3];
+    const char *arqB = argv[4];
+    const char *arqC = argv[5];
+    const char *arqD = argv[6];
+    const char *arqE = argv[7];
 
     Matrices matrices;
     matrices.A = allocate_matrix(n);
@@ -216,9 +221,6 @@ int main(int argc, char *argv[]) {
         thread_data[i].matrices = &matrices;
         pthread_create(&threads[i], NULL, thread_reduce_matrix, &thread_data[i]);
     }
-
-    pthread_join(threads[0], NULL);
-
     for (int i = 1; i <= T; i++) {
         pthread_join(threads[i], (void **)&partial_sum);
         total_sum += partial_sum;
